@@ -5,8 +5,9 @@
 class Engine {
 public:
     Engine(
-        const std::string& label
+        std::string&& label
     );
+    ~Engine();
 
     void init();
     int start();
@@ -23,7 +24,6 @@ private:
     int _height;
 
     class GLFWwindow* _window;
-    class GLFWmonitor* _mainMonitor;
 
 private:
     bool _init = false;

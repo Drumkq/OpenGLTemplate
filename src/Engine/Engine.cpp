@@ -2,11 +2,16 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdexcept>
+#include <functional>
 #include <iostream>
 
 Engine::Engine(
-    const std::string &label
-): _label(label) {}
+    std::string &&label
+): _label(std::move(label)) {}
+
+Engine::~Engine() {
+    glfwDestroyWindow(_window);
+}
 
 void Engine::init()
 {
@@ -15,8 +20,11 @@ void Engine::init()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    _mainMonitor = glfwGetPrimaryMonitor();
-    auto vidMode = glfwGetVideoMode(_mainMonitor);
+    auto monitor = glfwGetPrimaryMonitor();
+    if (!monitor) {
+        throw std::runtime_error("Failed to find main monitor");
+    }
+    auto vidMode = glfwGetVideoMode(monitor);
     _width = vidMode->width;
     _height = vidMode->height;
 
