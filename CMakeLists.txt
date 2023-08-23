@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.27.3)
 project(openglproj)
 
-add_executable(${PROJECT_NAME} "src/main.cpp")
+add_executable(${PROJECT_NAME} "src/main.cpp" "src/Engine/Engine.hpp" "src/Engine/Engine.cpp" "src/Game/Game.hpp" "src/Game/Game.cpp")
 find_package(OpenGL REQUIRED)
 target_link_libraries(${PROJECT_NAME} OpenGL::GL)
 
